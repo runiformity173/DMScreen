@@ -12,7 +12,14 @@
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 
-<body onload="load()">
+<body onload="load();document.getElementById('loading').classList.add('loaded')">
+  <div id="loading">
+    <div class="spinnerContainer">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  </div>
   <template id="conditionTemplate">
     <div class="identifier d-none" id="condition"></div>
     <h2 class="title"></h2>
