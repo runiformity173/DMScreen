@@ -5,7 +5,8 @@ This code is provided as-is under [Creative Commons Attribution-Noncommercial (C
 This project features an endlessly scrollable canvas. Click and drag to move it, and scroll up or down to zoom in or out.  
 Use the "+" button to add a new module window to the screen.  
 Drag the top bar of each window to move it, and drag the bottom right corner to resize it.  
-Your windows and their data are saved between reloads in local storage.
+Your windows and their data are saved between reloads in local storage.  
+Click the bottom right button to return to the center of the canvas.  
 ## Modules
 The Notes module allows you to write text of your choosing.  
 The Initiative Tracker module does what it sounds like, with automatic sorting and support for setting a default player list.  
