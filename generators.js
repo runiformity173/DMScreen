@@ -1,37 +1,27 @@
-/*
-Syntax
-DONE:
-Tables are defined by "$listName"
-[listName] recursively gets something from that list
-[a|b|c] returns either a, b, c, etc.
-$+listName to expand an existing list
-element {0 < weight < 1} to add it with that weight
-element {(0 < weight < 100)%} to add it with that weight
-Properties: {a: b, c: d} after an element will allow properties.
-
-TODO:
-[listName,#identifier] stores the result. Use [#identifier] to retrieve it
-Templating: "%1 %2", when returned as part of [listName,%a,%b] will read "a b"
-Access properties with [listName,?a]
-optional: $include to include other files
-
-*/
 const testTables = `
+$vowel
+a
+e
+i
+o
+u
+y {50%}
+
 $greeting
-Hello {corresponding: World!,10%}
-hello {corresponding: world!,0.5}
-$
+a {first: H%1llo, second: W%1rld!,50%}
+b {first: h%1llo, second: w%1rld!,0.5}
+
 $sayHi
-[greeting]
-$
+[greeting,#g,hidden][#g,?first,%[vowel,#v]] [#g, ?second,%[#v]]
+
 `
 
 
 
 const generatorTables = {}
 function loadTables(data) {
-    for (const match of data.matchAll(/\$[^$]+\$/g)) {
-        const lines = match[0].slice(1,-1).split("\n");
+    for (const match of data.matchAll(/\$[^$]+/g)) {
+        const lines = match[0].slice(1).split("\n");
         let name = lines[0];
         let tableData = [];
         lines.shift();
@@ -41,9 +31,9 @@ function loadTables(data) {
         }
         for (const element of lines) {
             if (element.match(/^\s*$/g)) continue;
-            const elData = {value:element.split("{")[0],data:{},weight:1};
+            const elData = {value:element.split(" {")[0],data:{},weight:1};
             if (element.match(/[^\{]+\s*\{/g)) {
-                const extraData = element.split("{")[1].slice(0,-1).split(",");
+                const extraData = element.split("{")[1].slice(0,-1).split(/,\s*/g);
                 for (const ext of extraData) {
                     if (ext.includes(":")) {
                         const [key,val] = ext.split(/:\s*/g);
@@ -66,12 +56,30 @@ function tableChoose(table) {
     const r = Math.random()*totalWeight;
     let i = 0;
     for (const j of t) {
-        if (r < i+j.weight) return j;
+        if (r < i+j.weight) return structuredClone(j);
         i += j.weight;
     }
     return "ERROR";
 }
+function argSplit(str) {
+    let depth = 0;
+    let found = -1;
+    let ind = 0;
+    for (const i of str) {
+        ind++;
+        if (i == "[") depth++;
+        else if (i == "]") depth--;
+        else if (i == "," && depth == 0) found = ind-1;
+        else if (i != " " && found != -1) {
+            const r = argSplit(str.slice(ind-1))
+            r.unshift(str.slice(0,found));
+            return r;
+        }
+    }
+    return [str];
+}
 function evaluate(str,identifiers={}) {
+    console.log(str);
     const startingIndex = str.indexOf("[");
     if (startingIndex < 0) return str;
     let endingIndex = startingIndex;
@@ -86,8 +94,34 @@ function evaluate(str,identifiers={}) {
     if (inner.includes("|")) {
         const options = inner.split("|");
         final = options[Math.floor(Math.random()*options.length)];
-    } else if (inner in generatorTables) {
-        final = tableChoose(inner).value;
+    } else if (inner.includes(",")) {
+        const args = argSplit(inner);
+        console.log(args,inner)
+        const choice = args[0][0] == "#" ? identifiers[args[0].slice(1)] : tableChoose(args[0]);
+        args.shift();
+        let formatCounter = 1;
+        let prop;
+        let hidden = false;
+        final = choice.value;
+        for (const i of args) {
+            if (i[0] == "%") {
+                if (prop) {
+                    choice.data[prop] = choice.data[prop].replaceAll("%"+(formatCounter++),evaluate(i.slice(1),identifiers));
+                    final = choice.data[prop];
+                } else {
+                    choice.value = choice.value.replaceAll("%"+(formatCounter++),evaluate(i.slice(1),identifiers));
+                    final = choice.value;
+                }
+            }
+            if (i[0] == "?") {
+                prop = evaluate(i.slice(1),identifiers);
+                final = choice.data[prop];
+            }
+            if (i[0] == "#") identifiers[i.slice(1)] = structuredClone(choice);
+            if (i == "hidden") final = "";
+        }
+    } else if (inner in generatorTables || inner[0] == "#" && inner.slice(1) in identifiers) {
+        final = inner[0] == "#" ? identifiers[inner.slice(1)].value : tableChoose(inner).value;
     } else {
         final = inner;
     }
