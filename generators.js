@@ -5,31 +5,24 @@ Tables are defined by "$listName"
 [listName] recursively gets something from that list
 [a|b|c] returns either a, b, c, etc.
 $+listName to expand an existing list
-
-TODO:
 element {0 < weight < 1} to add it with that weight
 element {(0 < weight < 100)%} to add it with that weight
+Properties: {a: b, c: d} after an element will allow properties.
+
+TODO:
 [listName,#identifier] stores the result. Use [#identifier] to retrieve it
 Templating: "%1 %2", when returned as part of [listName,%a,%b] will read "a b"
-Properties: {a: b, c: d} after an element will allow properties. Access them with [listName,as a]
+Access properties with [listName,?a]
 optional: $include to include other files
-Come up with syntax for weights? 3x as common?
 
 */
 const testTables = `
 $greeting
-Hello
-hello
-$
-$environment
-world
-World
-$
-$+greeting
-HELLO
+Hello {corresponding: World!,10%}
+hello {corresponding: world!,0.5}
 $
 $sayHi
-[greeting] [environment]
+[greeting]
 $
 `
 
@@ -48,9 +41,19 @@ function loadTables(data) {
         }
         for (const element of lines) {
             if (element.match(/^\s*$/g)) continue;
-            const elData = {value:element.split("{")[0],data:{}};
+            const elData = {value:element.split("{")[0],data:{},weight:1};
             if (element.match(/[^\{]+\s*\{/g)) {
-                const extraData
+                const extraData = element.split("{")[1].slice(0,-1).split(",");
+                for (const ext of extraData) {
+                    if (ext.includes(":")) {
+                        const [key,val] = ext.split(/:\s*/g);
+                        elData.data[key] = val;
+                    } else if (ext.includes("%")){
+                        elData.weight = Number(ext.slice(0,-1))/100;
+                    } else {
+                        elData.weight = Number(ext);
+                    }
+                }
             }
             tableData.push(elData)
         }
@@ -59,10 +62,16 @@ function loadTables(data) {
 }
 function tableChoose(table) {
     const t = generatorTables[table];
-    return t[Math.floor(Math.random()*t.length)];
+    const totalWeight = t.reduce((a,b)=>{return {weight:a.weight+b.weight}}).weight;
+    const r = Math.random()*totalWeight;
+    let i = 0;
+    for (const j of t) {
+        if (r < i+j.weight) return j;
+        i += j.weight;
+    }
+    return "ERROR";
 }
 function evaluate(str,identifiers={}) {
-    console.log(str);
     const startingIndex = str.indexOf("[");
     if (startingIndex < 0) return str;
     let endingIndex = startingIndex;
