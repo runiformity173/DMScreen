@@ -173,8 +173,8 @@ its skin is [skin color] and [covered in [[color] ||]fur|covered in short [[colo
 
 $diet
 [it eats|it feeds on|its diet consists [mainly|mostly|entirely|almost entirely|exclusively] of] [#habitat,?food,unique]
-[it eats|it feeds on|its diet consists [mainly|mostly|entirely|almost entirely||] of] [#habitat,?food,unique] and [#habitat,?food,unique]
-[it eats|it feeds on|its diet consists [mainly|mostly|almost entirely||] of] [#habitat,?food,unique], [#habitat,?food,unique], and [occasionally|every once in a while|when available|sometimes|whenever possible], [#habitat,?food,unique]
+[it eats|it feeds on|its diet consists [mainly |mostly |entirely |almost entirely ||]of] [#habitat,?food,unique] and [#habitat,?food,unique]
+[it eats|it feeds on|its diet consists [mainly |mostly |almost entirely ||]of] [#habitat,?food,unique], [#habitat,?food,unique], and [occasionally|every once in a while|when available|sometimes|whenever possible], [#habitat,?food,unique]
 [it metabolizes sunlight into nutrients|it absorbs ambient nutrients through its skin|it doesn't need to eat] {2%}
 
 $mind
@@ -246,13 +246,19 @@ $creature adj
 [plant-like|insect-like|alien-looking|vaguely humanoid] {10%}
 
 $creature
-[name,#name,hidden,written][habitat,#habitat,hidden][#habitat,?locomotion,#locomotion,hidden][rareness,#rareness,hidden][color,#color,written,hidden]<h1>The [#name,Abc]</h1><p>[The <b>[#name]</b> is [an]|[An]|This creature is [an]] [creature adj] [#locomotion] animal that lives [#habitat,?biome]. [Diet]. [Head] [body] with [limbs]. [Skin].<br>[Mind].</p>
+[name,#name,hidden][habitat,#habitat,hidden][#habitat,?locomotion,#locomotion,hidden][rareness,#rareness,hidden][color,#color,hidden]<h1>The [#name,Abc]</h1><p>[The <b>[#name]</b> is [an]|[An]|This creature is [an]] [creature adj] [#locomotion] animal that lives [#habitat,?biome]. [Diet]. [Head] [body] with [limbs]. [Skin].<br>[Mind].</p>
+
+$vowel
+a
+e
+i
+o
+u
+y {0.5}
 
 $test
-[name,#name,hidden,written][habitat,#habitat,hidden][#habitat,?locomotion,#locomotion,hidden][rareness,#rareness,hidden][color,#color,written,hidden][body]
+[vowel,unique][vowel,unique][vowel,unique][vowel,unique][vowel,unique][vowel,unique]
 `
-
-// IN THE MIDDLE OF TABLE CAPITALIZATION SCHEME
 
 const generatorTables = {}
 function loadTables(data) {
@@ -286,7 +292,7 @@ function loadTables(data) {
         generatorTables[name] = tableData;
     }
 }
-function tableChoose(table,identifiers) {
+function tableChoose(table,passedData) {
     const t = generatorTables[table.toLowerCase()];
     const totalWeight = t.reduce((a,b)=>{return {weight:a.weight+b.weight}}).weight;
     const r = Math.random()*totalWeight;
@@ -296,13 +302,11 @@ function tableChoose(table,identifiers) {
         if (r < i+j.weight && r >= i) final = structuredClone(j);
         i += j.weight;
     }
-    for (const i in final.data) {
-        final.data[i] = evaluate(final.data[i],identifiers);
-    }
-    final.value = evaluate(final.value,identifiers);
+    final.value = evaluate(final.value,passedData);
     return final;
 }
 function capitalizeString(str,scheme) {
+    if (!str) return str;
     if (scheme == "default") return str;
     if (scheme == "upper") return str.toUpperCase();
     if (scheme == "lower") return str.toLowerCase();
@@ -312,10 +316,11 @@ function capitalizeString(str,scheme) {
         let i = 0;
         const l = str.split(" ").length;
         for (const word of str.split(" ")) {
-            if (["a","an","the","of"].includes(word.toLowerCase()) && i != 0 && i < l) final.push(word.toLowerCase);
+            if (["a","an","the","of"].includes(word.toLowerCase()) && i != 0 && i < l-1) final.push(word.toLowerCase());
             else final.push(word[0].toUpperCase()+word.slice(1).toLowerCase());
             i++;
         }
+        return final.join(" ");
     }
     return str;
 }
@@ -336,7 +341,7 @@ function argSplit(str,delim=",") {
     if (found > -1) return [str.slice(0,-1),""];
     return [str];
 }
-function evaluate(str,identifiers={}) {
+function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
     const startingIndex = str.indexOf("[");
     if (startingIndex < 0) return str;
     let endingIndex = startingIndex;
@@ -347,8 +352,10 @@ function evaluate(str,identifiers={}) {
         else if (str[endingIndex] == "]") depth--;
     }
     const inner = str.slice(startingIndex+1,endingIndex);
+    if (!(inner in passedData.uniqueSets)) passedData.uniqueSets[inner] = new Set();
     let final;
     let isAnAn = false;
+    let unique = false;
     let capitalization = "default";
     if (inner == "an") {
         isAnAn = true;
@@ -358,7 +365,11 @@ function evaluate(str,identifiers={}) {
         final = options[Math.floor(Math.random()*options.length)];
     } else if (inner.includes(",")) {
         const args = argSplit(inner);
-        const choice = (args[0][0] == "#") ? identifiers[args[0].slice(1).toLowerCase()] : tableChoose(args[0].toLowerCase(),identifiers);
+        if (args[0].replace("#","")[0] == args[0].replace("#","")[0].toUpperCase()) {
+            if (args[0] == args[0].toUpperCase()) capitalization = "upper";
+            else capitalization = "cap";
+        }
+        const choice = (args[0][0] == "#") ? passedData.identifiers[args[0].slice(1).toLowerCase()] : tableChoose(args[0].toLowerCase(),passedData);
         args.shift();
         let formatCounter = 1;
         let prop;
@@ -367,27 +378,44 @@ function evaluate(str,identifiers={}) {
         for (const i of args) {
             if (i[0] == "%") {
                 if (prop) {
-                    choice.data[prop] = choice.data[prop].replaceAll("%"+(formatCounter++),evaluate(i.slice(1),identifiers));
+                    choice.data[prop] = choice.data[prop].replaceAll("%"+(formatCounter++),evaluate(i.slice(1),passedData));
                     final = choice.data[prop];
                 } else {
-                    choice.value = choice.value.replaceAll("%"+(formatCounter++),evaluate(i.slice(1),identifiers));
+                    choice.value = choice.value.replaceAll("%"+(formatCounter++),evaluate(i.slice(1),passedData));
                     final = choice.value;
                 }
             }
-            if (i[0] == "?") {
-                prop = evaluate(i.slice(1),identifiers);
+            else if (i[0] == "?") {
+                prop = evaluate(i.slice(1),passedData);
                 final = choice.data[prop];
             }
-            if (i[0] == "#") identifiers[i.slice(1).toLowerCase()] = prop?choice.data[prop]:structuredClone(choice);
-            if (i == "hidden") final = "";
+            else if (i[0] == "#") passedData.identifiers[i.slice(1).toLowerCase()] = prop?choice.data[prop]:structuredClone(choice);
+            else if (i == "hidden") final = "";
+            else if (i == "unique") unique = true;
+            else {
+                if (i[0] == i[0].toUpperCase()) {
+                    if (i == i.toUpperCase()) capitalization = "upper";
+                    else capitalization = "title";
+                } else {
+                    capitalization = "lower";
+                }
+            }
         }
-    } else if (inner.toLowerCase() in generatorTables || inner[0] == "#" && inner.slice(1).toLowerCase() in identifiers) {
-        final = (inner[0] == "#") ? (identifiers[inner.slice(1).toLowerCase()].value||identifiers[inner.slice(1).toLowerCase()]) : tableChoose(inner.toLowerCase(),identifiers).value;
+    } else if (inner.toLowerCase() in generatorTables || inner[0] == "#" && inner.slice(1).toLowerCase() in passedData.identifiers) {
+        if (inner.replace("#","")[0] == inner.replace("#","")[0].toUpperCase()) {
+            if (inner == inner.toUpperCase()) capitalization = "upper";
+            else capitalization = "cap";
+        }
+        final = (inner[0] == "#") ? (passedData.identifiers[inner.slice(1).toLowerCase()].value||passedData.identifiers[inner.slice(1).toLowerCase()]) : tableChoose(inner.toLowerCase(),passedData).value;
     } else {
         final = inner;
     }
-    let currentSpan = capitalizeString(evaluate(final,identifiers),capitalization);
-    const rest = evaluate(str.slice(endingIndex+1),identifiers);
+    let currentSpan = capitalizeString(evaluate(final,passedData),capitalization);
+    if (unique && passedData.uniqueSets[inner].has(currentSpan)) {
+        currentSpan = evaluate("["+inner+"]",passedData);
+    }
+    passedData.uniqueSets[inner].add(currentSpan);
+    const rest = evaluate(str.slice(endingIndex+1),passedData);
     if (isAnAn && rest.length > 0 && ("aeiou".includes(rest[0].toLowerCase()) || rest[0] == " " && rest.length > 1 && "aeiou".includes(rest[1].toLowerCase()))) {
         final += "n";
         currentSpan = capitalizeString(final,capitalization);
@@ -395,5 +423,4 @@ function evaluate(str,identifiers={}) {
     return str.slice(0,startingIndex) + currentSpan + rest;
 }
 loadTables(testTables);
-console.log(generatorTables);
-console.log(evaluate("[creature]"))
+console.log(evaluate("[creature]"));
