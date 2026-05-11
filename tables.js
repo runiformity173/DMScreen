@@ -75,12 +75,14 @@ function parseStrings(str,rollLiterals=true) {
     return str.replace(regex, function(match, item){
       let final = item.trim();
       if (!rollLiterals) {return final;}
-      if (match.includes("@dice")) {
+      if (match.includes("@dice ")) {
         final = `<span onclick='rollDiceGlobal("${final}")' class='rollLink'>${final}</span>`
       } else if (match.includes("@creature")) {
         final = `<a class='rollLink' href='https://runiformity173.github.io/dnd/MonsterSearch/display/#${final.replaceAll(' ','-')}' target='_blank'>${final}</a>`
       } else if (match.includes("@spell")) {
         final = `<a class='rollLink' href='https://runiformity173.github.io/dnd/SpellSearch2024/display/?spell=${final.replaceAll(' ','-')}' target='_blank'>${final}</a>`
+      } else if (match.includes("@i ")) {
+        final = `<i>${final}</i>`;
       } else {
         const splat = match.split("|");
         if (splat.length == 3) {
