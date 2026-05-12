@@ -39,10 +39,17 @@ function loadTable(box,name) {
       style = table.rows[j].style;
     }
     finalBody += "<tr>";
+    let colCounter = 0;
     for (let i = 0;i<table.colStyles.length;i++) {
       switch (style) {
         case "":
-          finalBody += `<td class="${table.colStyles[i]}">${parseStrings(table.rows[j][i])}</td>`;
+          const text = table.rows[j][i];
+          if (!text) break;
+          if (text?.width) {
+            finalBody += `<td colspan="${table.colStyles.length}">${parseStrings(text)}</td>`;
+            break;
+          }
+          finalBody += `<td class="${table.colStyles[i]}">${parseStrings(text)}</td>`;
           break;
         case "row-indent-first":
           finalBody += `<td class="${table.colStyles[i]}">${i==0?INDENT:""}${parseStrings(table.rows[j].row[i])}</td>`;
@@ -62,17 +69,20 @@ function loadTable(box,name) {
   }
 }
 function parseStrings(str,rollLiterals=true) {
+  if (!str) return "";
   if (typeof str === 'string' || str instanceof String) {
     const regex = /\{@[^\s]+\s+([^|}]+)\s*\|?[^}]*\}/g;
     return str.replace(regex, function(match, item){
       let final = item.trim();
       if (!rollLiterals) {return final;}
-      if (match.includes("@dice")) {
+      if (match.includes("@dice ")) {
         final = `<span onclick='rollDiceGlobal("${final}")' class='rollLink'>${final}</span>`
       } else if (match.includes("@creature")) {
         final = `<a class='rollLink' href='https://runiformity173.github.io/dnd/MonsterSearch/display/#${final.replaceAll(' ','-')}' target='_blank'>${final}</a>`
       } else if (match.includes("@spell")) {
         final = `<a class='rollLink' href='https://runiformity173.github.io/dnd/SpellSearch2024/display/?spell=${final.replaceAll(' ','-')}' target='_blank'>${final}</a>`
+      } else if (match.includes("@i ")) {
+        final = `<i>${final}</i>`;
       } else {
         const splat = match.split("|");
         if (splat.length == 3) {
@@ -82,7 +92,7 @@ function parseStrings(str,rollLiterals=true) {
       return final;
     });
   } else if (typeof str === 'object' && !Array.isArray(str) && str !== null) {
-    return str?.roll?.exact || "";
+    return str?.roll?.exact || parseStrings(str?.entry) || "";
   }
   return str;
 }
