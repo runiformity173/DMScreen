@@ -12,7 +12,14 @@
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 
-<body onload="load()">
+<body onload="load();document.getElementById('loading').classList.add('loaded')">
+  <div id="loading">
+    <div class="spinnerContainer">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  </div>
   <template id="conditionTemplate">
     <div class="identifier d-none" id="condition"></div>
     <h2 class="title"></h2>
@@ -126,6 +133,11 @@
         <div class="window" id="windowB" style="left:800px; top:512px;">B</div> -->
     </div>
   </div>
+  <div class="bottom-button">
+    <button class="main-btn" onclick="recenter()">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="5"></line><line x1="12" y1="19" x2="12" y2="22"></line><line x1="2" y1="12" x2="5" y2="12"></line><line x1="19" y1="12" x2="22" y2="12"></line><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="1" fill="currentColor"></circle></svg>
+    </button>
+  </div>
   <div class="fab-menu">
     <button class="main-btn">
       <span>+</span>
@@ -152,6 +164,8 @@
   <script src="monsters.js"></script>
   <script src="conditions.js"></script>
   <script src="names.js"></script>
+  <script src="generatorTables.js"></script>
+  <script src="generators.js"></script>
   <script src="display.js"></script>
   <script src="script.js"></script>
   <script src="help.js"></script>

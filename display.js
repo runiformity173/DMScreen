@@ -35,6 +35,7 @@ const SNAP = 32;
 const MIN_ZOOM = 0.5;
 const MAX_ZOOM = 2.5;
 const ZOOM_STEP = 1.05;
+const RECENTER_FRAMES = 10;
 
 let ID = 0;
 
@@ -252,4 +253,21 @@ function openModal(modalName, adding=false) {
         document.getElementById(modalName+"Modal").classList.add("hidden");
         document.querySelector(".fab-menu").classList.remove("forcedOpen");
     }
+}
+let framesRemaining = 0;
+let lastMovementHash = 0;
+function recenter() {
+    if (framesRemaining > 0) return;
+    framesRemaining = RECENTER_FRAMES
+    const dx = cameraX/RECENTER_FRAMES;
+    const dy = cameraY/RECENTER_FRAMES;
+    const dz = (zoom-1)/RECENTER_FRAMES;
+    const recenterFrame = function() {
+        cameraX -= dx;
+        cameraY -= dy;
+        zoom -= dz;
+        renderCamera();
+        if (--framesRemaining > 0) requestAnimationFrame(recenterFrame);
+    };
+    requestAnimationFrame(recenterFrame);
 }
