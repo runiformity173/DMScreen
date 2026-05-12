@@ -66,6 +66,8 @@ function load() {
         i.children[1].src = data.link;
       } else if (entry.type == "monster") {
         i.children[1].src = data.link;
+      } else if (entry.type == "generator") {
+        loadGenerator(i,data);
       }
     }
   });
@@ -93,7 +95,9 @@ const moduleMap = {
   "Condition Select":"conditionSelect",
   "conditionSelect":"conditionSelect",
   "Condition":"condition",
-  "condition":"condition"
+  "condition":"condition",
+  "Generator":"generator",
+  "generator":"generator",
 }
 function addModule(addedModule,box,addDefault=true,extraData={}) {
   if (!(addedModule in moduleMap)) {
@@ -159,6 +163,10 @@ function addModule(addedModule,box,addDefault=true,extraData={}) {
     if (addDefault) {
       box.children[1].src = "https://runiformity173.github.io/dnd/MonsterSearch/display/#"+extraData.name.toLowerCase().replaceAll(" ","-");
     }
+  } else if (module == "generator") {
+    if (addDefault) {
+      loadGenerator(box,extraData);
+    }
   }
   if (addDefault) save(box);
   box.closest(".window").renderFunction();
@@ -194,6 +202,9 @@ function save(box=null) {
       data["link"] = box.children[1].src;
     } else if (type == "monster") {
       data["link"] = box.children[1].src;
+    } else if (type == "generator") {
+      data["name"] = document.querySelector(`#${box.id} .generatorName`).innerHTML;
+      data["content"] = document.querySelector(`#${box.id} .generatorContent`).innerHTML;
     }
     const newWindows = getCookie("windows");
     const boxIndex = newWindows.findIndex(i=>i.name == box.id);

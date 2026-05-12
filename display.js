@@ -11,6 +11,7 @@ const minWidths = {
     "monster":16,
     "spell":8,
     "condition":9,
+    "generator":6,
 };
 const minHeights = {
     "initiativeTracker":6,
@@ -20,6 +21,7 @@ const minHeights = {
     "monster":10,
     "spell":10,
     "condition":6,
+    "generator":6,
 };
 const defaultNames = {
     "initiativeTracker":"Initiative Tracker",
@@ -29,6 +31,7 @@ const defaultNames = {
     "monster":"Monster",
     "spell":"Spell",
     "condition":"Condition",
+    "generator":"Generator",
 }
 
 const SNAP = 32;
@@ -128,7 +131,6 @@ function createWindow(title, x, y, w, h, id=null) {
         resizing = true;
         startX = e.clientX;
         startY = e.clientY;
-        console.log("clicked")
         e.stopPropagation();
     });
     el.renderFunction = renderWindow;

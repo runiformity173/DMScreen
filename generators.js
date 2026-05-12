@@ -163,5 +163,12 @@ function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
     }
     return str.slice(0,startingIndex) + currentSpan + rest;
 }
+function loadGenerator(box,extraData) {
+    box.querySelector(".generatorName").innerHTML = extraData.name;
+    box.querySelector(".generatorContent").innerHTML = extraData.content || "";
+}
+function generate(box) {
+    box.querySelector(".generatorContent").innerHTML = evaluate("["+box.querySelector(".generatorName").innerHTML.toLowerCase()+"]");
+    save(box);
+}
 loadTables(magicItemTables);
-console.log(evaluate("[magic item]"));
