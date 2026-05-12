@@ -95,9 +95,12 @@ function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
     let isAnAn = false;
     let unique = false;
     let capitalization = "default";
+    const evaluatedInner = evaluate(inner,passedData);
     if (inner == "an") {
         isAnAn = true;
         final = "a";
+    } else if (inner == "comma") {
+        final = ","
     } else if (inner.includes("|")) {
         const options = argSplit(inner,"|");
         final = options[Math.floor(Math.random()*options.length)];
@@ -107,7 +110,7 @@ function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
             if (args[0] == args[0].toUpperCase()) capitalization = "upper";
             else capitalization = "cap";
         }
-        const choice = (args[0][0] == "#") ? passedData.identifiers[args[0].slice(1).toLowerCase()] : tableChoose(args[0].toLowerCase(),passedData);
+        const choice = (args[0][0] == "#") ? passedData.identifiers[args[0].slice(1).toLowerCase()] : tableChoose(evaluate(args[0].toLowerCase(),passedData),passedData);
         args.shift();
         let formatCounter = 1;
         let prop;
@@ -139,12 +142,12 @@ function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
                 }
             }
         }
-    } else if (inner.toLowerCase() in generatorTables || inner[0] == "#" && inner.slice(1).toLowerCase() in passedData.identifiers) {
-        if (inner.replace("#","")[0] == inner.replace("#","")[0].toUpperCase()) {
+    } else if (evaluatedInner.toLowerCase() in generatorTables || evaluatedInner[0] == "#" && evaluatedInner.slice(1).toLowerCase() in passedData.identifiers) {
+        if (evaluatedInner.replace("#","")[0] == evaluatedInner.replace("#","")[0].toUpperCase()) {
             if (inner == inner.toUpperCase()) capitalization = "upper";
             else capitalization = "cap";
         }
-        final = (inner[0] == "#") ? (passedData.identifiers[inner.slice(1).toLowerCase()].value||passedData.identifiers[inner.slice(1).toLowerCase()]) : tableChoose(inner.toLowerCase(),passedData).value;
+        final = (evaluatedInner[0] == "#") ? (passedData.identifiers[evaluatedInner.slice(1).toLowerCase()].value||passedData.identifiers[evaluatedInner.slice(1).toLowerCase()]) : tableChoose(evaluatedInner.toLowerCase(),passedData).value;
     } else {
         final = inner;
     }
@@ -160,5 +163,12 @@ function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
     }
     return str.slice(0,startingIndex) + currentSpan + rest;
 }
+function loadGenerator(box,extraData) {
+    box.querySelector(".generatorName").innerHTML = extraData.name;
+    box.querySelector(".generatorContent").innerHTML = extraData.content || "";
+}
+function generate(box) {
+    box.querySelector(".generatorContent").innerHTML = evaluate("["+box.querySelector(".generatorName").innerHTML.toLowerCase()+"]");
+    save(box);
+}
 loadTables(magicItemTables);
-console.log(evaluate("[magic item]"));

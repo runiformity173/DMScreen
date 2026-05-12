@@ -114,16 +114,26 @@
     <div class="bottomRow">
       <button class="btn btn-outline-light" onclick="this.parentElement.previousElementSibling.appendChild(document.getElementById('health').content.cloneNode(true));save(this.closest('.box'));">Add Entry</button>
     </div>
-    
   </template>
   <template id="notesTemplate">
     <div class="identifier d-none" id="notes"></div>
     <textarea class="notesArea" oninput="save(this.parentElement);"></textarea>
   </template>
+  <template id="generatorTemplate">
+    <div class="identifier d-none" id="generator"></div>
+    <div>
+      <h2 class="generatorName"></h2>
+      <div class="generatorContent"></div>
+      <button class="btn btn-outline-light" onclick="generate(this.closest('.box'))">Another!</button>
+    </div>
+  </template>
   <datalist id="tablesDatalist"></datalist>
   <datalist id="spellsDatalist"></datalist>
   <datalist id="monstersDatalist"></datalist>
   <datalist id="conditionsDatalist"></datalist>
+  <datalist id="generatorsDatalist">
+    <option>Magic Item</option>
+  </datalist>
   <!-- <div id="container" class="container-fluid p-0">
     <div class="box static-box" id="box-1"></div>
   </div> -->
@@ -144,6 +154,8 @@
     </button>
 
     <div class="menu-items">
+      <div class="addWindowInput hidden" id="generatorModal"><input type="text" list="generatorsDatalist" oninput="datalistInput(this)" name="generator"></div>
+      <button onclick="openModal('generator')">Generator</button>
       <button onclick="addWindow('notes')">Notes</button>
       <button onclick="addWindow('initiativeTracker')">Initiative Tracker</button>
       <button onclick="addWindow('healthTracker')">Health Tracker</button>
