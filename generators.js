@@ -192,6 +192,9 @@ function runGenerator(generator) {
     }
     return result;
 }
+function testGenerator(generator,runs=10000) {
+    for (let i = 0;i<runs;i++) runGenerator(generator);
+}
 function generate(box) {
     box.querySelector(".generatorContent").innerHTML = runGenerator(box.querySelector(".generatorName").innerHTML);
     save(box);
