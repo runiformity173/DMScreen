@@ -89,7 +89,7 @@ $tavern
 
 
 $npc class
-barbarian {7,stat block:[berserker,low:[dex|wis|int|cha],high:[str|con]]}
+barbarian {7,stat block:[berserker],low:[dex|wis|int|cha],high:[str|con]}
 bard {7,stat block:[performer],low:[str|con|wis|int],high:[str|dex|int|cha]}
 cleric {15,stat block:[priest],low:[str|dex|con|int|cha],high:[str|con|wis]}
 druid {7,stat block:[druid],low:[str|dex|con|int|cha],high:[con|wis|int]}
@@ -376,8 +376,6 @@ $npc high cha
 [charming|commanding|hilarious|inspiring]
 $npc low cha
 [pedantic|humorless|reserved|tactless]
-$npc ability score
-[str|dex|con|wis|int|cha]
 
 $npc appearance
 [wears distinctive jewelry|wears [flamboyant|outlandish|formal|ragged] clothes|uses [an] [elegant|simple] [wheeled chair|brace|cane]|has a pronounced scar|has [an unusual eye color|heterochromia]|has [many tattoos|many piercings|a prominent tattoo|a prominent piercing]|has a birthmark|has an unusual hair color|[is bald|has [a braided beard|braided hair]]|has a distinctive, [large|bulbous|angular|tiny] nose|has distinctively [stooped|rigid] posture|is exceptionally [beautiful|ugly]]
