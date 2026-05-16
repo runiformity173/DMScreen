@@ -48,7 +48,7 @@ function capitalizeString(str,scheme) {
     if (scheme == "default") return str;
     if (scheme == "upper") return str.toUpperCase();
     if (scheme == "lower") return str.toLowerCase();
-    if (scheme == "cap") return str[0].toUpperCase() + str.slice(1).toLowerCase();
+    if (scheme == "cap") return str[0].toUpperCase() + str.slice(1);
     if (scheme == "title") {
         let final = [];
         let i = 0;
@@ -133,6 +133,8 @@ function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
             else if (i[0] == "#") passedData.identifiers[i.slice(1).toLowerCase()] = prop?choice.data[prop]:structuredClone(choice);
             else if (i == "hidden") final = "";
             else if (i == "unique") unique = true;
+            else if (i == "title") capitalization = "title";
+            else if (i == "cap") capitalization = "cap";
             else {
                 if (i[0] == i[0].toUpperCase()) {
                     if (i == i.toUpperCase()) capitalization = "upper";
@@ -171,4 +173,4 @@ function generate(box) {
     box.querySelector(".generatorContent").innerHTML = evaluate("["+box.querySelector(".generatorName").innerHTML.toLowerCase()+"]");
     save(box);
 }
-loadTables(magicItemTables);
+// loadTables(magicItemTables);
