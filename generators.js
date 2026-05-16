@@ -98,7 +98,7 @@ function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
     const evaluatedInner = evaluate(inner,passedData);
     if (inner == "an") {
         isAnAn = true;
-        final = "a";
+        final = "an9283751098234774839012";
     } else if (inner == "comma") {
         final = ","
     } else if (inner.includes("|")) {
@@ -159,18 +159,41 @@ function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
     }
     passedData.uniqueSets[inner].add(currentSpan);
     const rest = evaluate(str.slice(endingIndex+1),passedData);
-    if (isAnAn && rest.length > 0 && ("aeiou".includes(rest[0].toLowerCase()) || rest[0] == " " && rest.length > 1 && "aeiou".includes(rest[1].toLowerCase()))) {
-        final += "n";
-        currentSpan = capitalizeString(final,capitalization);
-    }
     return str.slice(0,startingIndex) + currentSpan + rest;
 }
 function loadGenerator(box,extraData) {
     box.querySelector(".generatorName").innerHTML = extraData.name;
     box.querySelector(".generatorContent").innerHTML = extraData.content || "";
 }
+function runGenerator(generator) {
+    let result = evaluate("["+generator.toLowerCase()+"]");
+    let a = result.matchAll(/[aA][nN]9283751098234774839012/g);
+    while (true) {
+        let found = false;
+        for (const matches of a) {
+            const match = matches[0];
+            let out;
+            out = "aeiou".includes(result[result.indexOf(match)+25]) ? "an" : "a";
+            if (match[0] == "A") {
+                if (match[1] == "N") {
+                    out = out.toUpperCase();
+                } else {
+                    out = out[0].toUpperCase() + out.slice(1).toLowerCase();
+                }
+            } else {
+                out = out.toLowerCase();
+            }
+            result = result.replace(match,out);
+            found = true;
+            break;
+        }
+        if (!found) break;
+        a = result.matchAll(/[aA][nN]9283751098234774839012/g)
+    }
+    return result;
+}
 function generate(box) {
-    box.querySelector(".generatorContent").innerHTML = evaluate("["+box.querySelector(".generatorName").innerHTML.toLowerCase()+"]");
+    box.querySelector(".generatorContent").innerHTML = runGenerator(box.querySelector(".generatorName").innerHTML);
     save(box);
 }
-// loadTables(magicItemTables);
+loadTables(generatorTablesString);
