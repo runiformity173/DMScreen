@@ -79,7 +79,7 @@ function argSplit(str,delim=",") {
     if (found > -1) return [str.slice(0,-1),""];
     return [str];
 }
-function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
+function evaluate(str,passedData={identifiers:{},uniqueSets:{},exclusionGroups:{}}) {
     const startingIndex = str.indexOf("[");
     if (startingIndex < 0) return str;
     let endingIndex = startingIndex;
@@ -90,22 +90,23 @@ function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
         else if (str[endingIndex] == "]") depth--;
     }
     const inner = str.slice(startingIndex+1,endingIndex);
-    if (!(inner in passedData.uniqueSets)) passedData.uniqueSets[inner] = new Set();
     let final;
     let isAnAn = false;
     let unique = false;
+    let hidden = false;
+    let exclusionGroup = null;
     let capitalization = "default";
     const evaluatedInner = evaluate(inner,passedData);
-    if (inner == "an") {
+    if (evaluatedInner == "an") {
         isAnAn = true;
         final = "an9283751098234774839012";
-    } else if (inner == "comma") {
+    } else if (evaluatedInner == "comma") {
         final = ","
-    } else if (inner.includes("|")) {
-        const options = argSplit(inner,"|");
+    } else if (evaluatedInner.includes("|")) {
+        const options = argSplit(evaluatedInner,"|");
         final = options[Math.floor(Math.random()*options.length)];
-    } else if (inner.includes(",")) {
-        const args = argSplit(inner);
+    } else if (evaluatedInner.includes(",")) {
+        const args = argSplit(evaluatedInner);
         if (args[0].replace("#","")[0] == args[0].replace("#","")[0].toUpperCase()) {
             if (args[0] == args[0].toUpperCase()) capitalization = "upper";
             else capitalization = "cap";
@@ -114,7 +115,6 @@ function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
         args.shift();
         let formatCounter = 1;
         let prop;
-        let hidden = false;
         final = choice.value;
         for (const i of args) {
             if (i[0] == "%") {
@@ -131,8 +131,12 @@ function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
                 final = choice.data[prop];
             }
             else if (i[0] == "#") passedData.identifiers[i.slice(1).toLowerCase()] = prop?choice.data[prop]:structuredClone(choice);
-            else if (i == "hidden") final = "";
-            else if (i == "unique") unique = true;
+            else if (i[0] == "!") exclusionGroup = evaluate(i.slice(1)).toLowerCase();
+            else if (i == "hidden") hidden = true;
+            else if (i == "unique") {
+                unique = true;
+                if (!(inner in passedData.uniqueSets)) passedData.uniqueSets[inner] = new Set();
+            }
             else if (i == "title") capitalization = "title";
             else if (i == "cap") capitalization = "cap";
             else {
@@ -153,11 +157,20 @@ function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
     } else {
         final = inner;
     }
-    let currentSpan = capitalizeString(evaluate(final,passedData),capitalization);
-    if (unique && passedData.uniqueSets[inner].has(currentSpan)) {
-        currentSpan = evaluate("["+inner+"]",passedData);
+    if (hidden) {
+        evaluate(final);
+        final = "";
     }
-    passedData.uniqueSets[inner].add(currentSpan);
+    let currentSpan = capitalizeString(evaluate(final,passedData),capitalization);
+    if ((unique && passedData.uniqueSets[inner].has(currentSpan)) || (exclusionGroup != null && exclusionGroup in passedData.exclusionGroups && passedData.exclusionGroups[exclusionGroup].has(currentSpan))) {
+        currentSpan = evaluate("["+evaluatedInner+"]",passedData);
+    } else {
+        if (exclusionGroup) {
+            if (!(exclusionGroup in passedData.exclusionGroups)) passedData.exclusionGroups[exclusionGroup] = new Set();
+            passedData.exclusionGroups[exclusionGroup].add(currentSpan);
+        }
+    }
+    if (unique) passedData.uniqueSets[inner].add(currentSpan);
     const rest = evaluate(str.slice(endingIndex+1),passedData);
     return str.slice(0,startingIndex) + currentSpan + rest;
 }
@@ -191,6 +204,11 @@ function runGenerator(generator) {
         a = result.matchAll(/[aA][nN]9283751098234774839012/g)
     }
     return result;
+}
+function testGenerator(generator,runs=10000) {
+    for (let i = 0;i<runs;i++) {
+        runGenerator(generator);
+    }
 }
 function generate(box) {
     box.querySelector(".generatorContent").innerHTML = runGenerator(box.querySelector(".generatorName").innerHTML);
