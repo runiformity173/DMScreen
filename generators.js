@@ -79,7 +79,7 @@ function argSplit(str,delim=",") {
     if (found > -1) return [str.slice(0,-1),""];
     return [str];
 }
-function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
+function evaluate(str,passedData={identifiers:{},uniqueSets:{},exclusionGroups:{}}) {
     const startingIndex = str.indexOf("[");
     if (startingIndex < 0) return str;
     let endingIndex = startingIndex;
@@ -94,6 +94,7 @@ function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
     let final;
     let isAnAn = false;
     let unique = false;
+    let exclusionGroup = null;
     let capitalization = "default";
     const evaluatedInner = evaluate(inner,passedData);
     if (inner == "an") {
@@ -131,6 +132,7 @@ function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
                 final = choice.data[prop];
             }
             else if (i[0] == "#") passedData.identifiers[i.slice(1).toLowerCase()] = prop?choice.data[prop]:structuredClone(choice);
+            else if (i[0] == "!") exclusionGroup = evaluate(i.slice(1)).toLowerCase();
             else if (i == "hidden") final = "";
             else if (i == "unique") unique = true;
             else if (i == "title") capitalization = "title";
@@ -154,10 +156,14 @@ function evaluate(str,passedData={identifiers:{},uniqueSets:{}}) {
         final = inner;
     }
     let currentSpan = capitalizeString(evaluate(final,passedData),capitalization);
-    if (unique && passedData.uniqueSets[inner].has(currentSpan)) {
+    if (unique && passedData.uniqueSets[inner].has(currentSpan) || exclusionGroup in passedData.exclusionGroups && passedData.exclusionGroups[exclusionGroup].has(currentSpan)) {
         currentSpan = evaluate("["+inner+"]",passedData);
     }
-    passedData.uniqueSets[inner].add(currentSpan);
+    if (unique) passedData.uniqueSets[inner].add(currentSpan);
+    if (exclusionGroup) {
+        if (!(exclusionGroup in passedData.exclusionGroups)) passedData.exclusionGroups[exclusionGroup] = new Set();
+        passedData.exclusionGroups[exclusionGroup].add(currentSpan);
+    }
     const rest = evaluate(str.slice(endingIndex+1),passedData);
     return str.slice(0,startingIndex) + currentSpan + rest;
 }

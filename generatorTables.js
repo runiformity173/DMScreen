@@ -89,36 +89,36 @@ $tavern
 
 
 $npc class
-barbarian {7}
-bard {7}
-cleric {15}
-druid {7}
-fighter {16}
-monk {6}
-paladin {6}
-ranger {6}
-rogue {14}
-sorcerer {5}
-warlock {5}
-wizard {6}
+barbarian {7,stat block:[berserker,low:[dex|wis|int|cha],high:[str|con]]}
+bard {7,stat block:[performer],low:[str|con|wis|int],high:[str|dex|int|cha]}
+cleric {15,stat block:[priest],low:[str|dex|con|int|cha],high:[str|con|wis]}
+druid {7,stat block:[druid],low:[str|dex|con|int|cha],high:[con|wis|int]}
+fighter {16,stat block:[warrior veteran],low:[str|dex|con|wis|int|cha],high:[str|dex|con|wis|int|cha]}
+monk {6,stat block:[bandit captain (modified)],low:[int|cha],high:[dex|con|wis]}
+paladin {6,stat block:[knight],low:[dex|wis|int],high:[str|con|cha]}
+ranger {6,stat block:[scout captain],low:[str|dex|con|int|cha],high:[dex|con|wis]}
+rogue {14,stat block:[spy|scout captain],low:[str|con|wis|int|cha],high:[dex|int|cha]}
+sorcerer {5,stat block:[mage apprentice],low:[str|dex|con|wis|int],high:[con|cha]}
+warlock {5,stat block:[cultist fanatic],low:[str|dex|con|wis|int],high:[dex|con|cha]}
+wizard {6,stat block:[mage apprentice],low:[str|dex|con|wis|cha],high:[dex|wis|int]}
 
 $npc occupation
-academic {5}
-adventurer ([npc class]) {5}
-aristocrat {1}
-[artisan|guild member] {15}
-criminal {5}
-entertainer {5}
-[exile|hermit|refugee] {2}
-[explorer|wanderer] {5}
-[farmer|herder] {12}
-[hunter|trapper] {5}
-laborer {15}
-merchant {5}
-[politician|bureaucrat] {5}
-priest {5}
-sailor {5}
-soldier {5}
+academic {5,stat block:[commoner|commoner|spy],low:[str|dex|con|wis|cha],high:[str|dex|con|wis|int|cha]}
+adventurer ([npc class,#class]) {5,stat block:[#class,?stat block],low:[#class,?low],high:[#class,?high]}
+aristocrat {1,stat block:[noble],low:[str|dex|con|wis|int|cha],high:[str|dex|con|wis|int|cha]}
+[artisan|guild member] {15,stat block:[commoner|commoner|tough],low:[con|wis|cha],high:[str|dex|con|wis|int|cha]}
+criminal {5,stat block:[spy|bandit|scout|tough|bandit|bandit captain|pirate],low:[str|dex|con|wis|int|cha],high:[str|dex|con]}
+entertainer {5,stat block:[performer],low:[str|dex|con|wis|int],high:[dex|int|cha]}
+[exile|hermit|refugee] {2,stat block:[commoner|scout|commoner],low:[str|dex|con|wis|int|cha],high:[str|dex|con|wis|int|cha]}
+[explorer|wanderer] {5,stat block:[scout],low:[str|dex|con|wis|int|cha],high:[str|dex|con|wis|int]}
+[farmer|herder] {12,stat block:[commoner],low:[str|dex|con|wis|int|cha],high:[str|dex|con|wis|int|cha]}
+[hunter|trapper] {5,stat block:[scout],low:[con|int|cha],high:[str|dex|con|wis|int|cha]}
+laborer {15,stat block:[commoner|commoner|warrior infantry],low:[dex|con|wis|int|cha],high:[str|dex|con|wis|cha]}
+merchant {5,stat block:[commoner|noble],low:[str|dex|con|wis|int|cha],high:[str|dex|con|wis|int|cha]}
+[politician|bureaucrat] {5,stat block:[noble|commoner],low:[str|dex|con|wis|int],high:[cha|wis|int|cha]}
+priest {5,stat block:[priest|priest acolyte|priest acolyte],low:[str|dex|con|int|cha],high:[int|wis|cha]}
+sailor {5,stat block:[pirate|scout|commoner|tough],low:[dex|wis|int|cha],high:[str|dex|con|wis|int|cha]}
+soldier {5,stat block:[guard|tough],low:[dex|wis|int|cha],high:[str|dex|con|wis|int|cha|str|con]}
 
 $npc race
 human {40,extra:[]}
@@ -352,15 +352,41 @@ $npc male goliath name
 [npc guttural first name] [npc guttural last name] {3}
 $npc female goliath name
 [npc male goliath name]
+$npc high str
+[muscular|sinewy|protective|direct]
+$npc low str
+[weak|self-conscious|indirect|slight]
+$npc high dex
+[lithe|dynamic|fidgety|poised]
+$npc low dex
+[jittery|clumsy|hesitant|unsteady]
+$npc high con
+[energetic|vigorous|hearty|stable]
+$npc low con
+[frail|squeamish|lethargic|fragile]
+$npc high wis
+[serene|considerate|attentive|wary]
+$npc low wis
+[rash|distracted|oblivious|naive]
+$npc high int
+[decisive|logical|informative|curious]
+$npc low int
+[artless|illogical|uninformed|frivolous]
+$npc high cha
+[charming|commanding|hilarious|inspiring]
+$npc low cha
+[pedantic|humorless|reserved|tactless]
+$npc ability score
+[str|dex|con|wis|int|cha]
 
 $npc appearance
-[wears distinctive jewelry|wears [flamboyant|outlandish|formal|ragged] clothes|uses an elegant [wheeled chair|brace|cane]|has a pronounced scar|has [an unusual eye color|heterochromia]|has [many tattoos|many piercings|a prominent tattoo|a prominent piercing]|has a birthmark|has an unusual hair color|[is bald|has [a braided beard|braided hair]]|has a distinctive, [large|bulbous|angular|tiny] nose|has distinctively [stooped|rigid] posture|is exceptionally [beautiful|ugly]]
+[wears distinctive jewelry|wears [flamboyant|outlandish|formal|ragged] clothes|uses [an] [elegant|simple] [wheeled chair|brace|cane]|has a pronounced scar|has [an unusual eye color|heterochromia]|has [many tattoos|many piercings|a prominent tattoo|a prominent piercing]|has a birthmark|has an unusual hair color|[is bald|has [a braided beard|braided hair]]|has a distinctive, [large|bulbous|angular|tiny] nose|has distinctively [stooped|rigid] posture|is exceptionally [beautiful|ugly]]
 
 $npc secret
-[[#gender,?subject] is in disguise, concealing [[#gender,?possessive] identity|some aspect of [#gender,?possessive] appearance].|[#gender,?subject] is currently [planning|executing|covering up] a crime.|[[#gender,?subject]|[#gender,?possessive] family|] has been threatened with harm unless [#gender,?subject] does something.|[#gender,?subject] is under a magical compulsion (perhaps a geas spell or some kind of curse) to behave in a certain way.|[#gender,?subject] is [seriously ill|in terrible pain].|[#gender,?subject] feels responsible for someone's [death|ill fortune].|[#gender,?subject] is on the brink of financial ruin.|[#gender,?subject] is [desperately lonely|harboring an unrequited passion].|[#gender,?subject] nurses a powerful ambition.|[#gender,?subject] is deeply [dissatisfied|unhappy].|[#gender,?subject] [doubts [#gender,?object]self often|has frequent worries].|[#gender,?subject] knows a [compromising|condemning] secret about someone important.]
+[is in disguise, concealing [[#gender,?possessive] identity|some aspect of [#gender,?possessive] appearance].|is currently [planning|executing|covering up] a crime.|has been threatened with harm to [[#gender,?object]self|[#gender,?possessive] family] unless [#gender,?subject] does something.|is under a magical compulsion (perhaps a geas spell or some kind of curse) to behave in a certain way.|is [seriously ill|in terrible pain].|feels responsible for someone's [death|ill fortune].|is on the brink of financial ruin.|is [desperately lonely|harboring an unrequited passion].|nurses a powerful ambition.|is deeply [dissatisfied|unhappy].|[doubts [#gender,?object]self often|has frequent worries].|knows a [compromising|condemning] secret about someone important.|envies another creature's [station|possessions].|is prone to [foolhardy bravery|arrogance|greed].]
 
 $npc
-[npc race,#race,hidden][npc gender,#gender,hidden][Npc [#gender] [#race] name,title] is [an] [#gender] [#race,?extra][#race] ([npc alignment,#alignment])<br>[#gender,?subject,cap] [npc appearance].<br>[#gender,?subject,cap] [works as|is|is] [an] [npc occupation] who [lives for|lives for] [npc [#alignment] ideal].<br>[Npc secret]
+[npc race,#race,hidden][npc gender,#gender,hidden][npc occupation,#occupation,hidden][Npc [#gender] [#race] name,title] is [an] [#gender] [#race,?extra][#race] ([npc alignment,#alignment]). [#gender,?subject,cap] is [npc high [#occupation,?high,!as]] but [npc low [#occupation,?low,!as]], and [npc appearance]. [#gender,?subject,cap] [works as|is|is] [an] [#occupation] who [lives for|lives for] [npc [#alignment] ideal], but [#gender,?subject] [npc secret]<br><br>Use the [#occupation,?stat block,title] stat block.
 `.replaceAll(/((?<=[,{])\n\s{4})|(\n(?=}))/g,"");
 
 function tableToOr(table) {
