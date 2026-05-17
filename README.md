@@ -12,6 +12,10 @@ The Notes module allows you to write text of your choosing.
 The Initiative Tracker module does what it sounds like, with automatic sorting and support for setting a default player list.  
 The Health Tracker module can be used for storing the health of many enemies or objects.  
 The Table, Monster, Spell, and Condition modules allows the searchable loading of elements from D&D source books.  
+### Generators
+The Generator module can generate the following types of content:
+- Tavern name and details
+- NPC name and details
 
 
 ## Future Features
