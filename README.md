@@ -24,6 +24,7 @@ These features are at my attention and I might add any of them. The most likely 
     - Shop, for sure.
     - Weather? (sight, sound, smell)
     - Dungeon room description? like smell and sound and such
+- Mobile support. Already has moving and resizing, just needs zooming.
 - Link to Notion? Idk how I would do that but it would be so sick.
 - Export Screen, save and load.
 - Popout windows. For example, clicking a spell on a monster stat block would create a new window instead of a new tab.
