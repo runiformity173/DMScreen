@@ -118,26 +118,30 @@ function createWindow(title, x, y, w, h, id=null) {
         closeWindow(el.querySelector(".box"));
         e.stopPropagation();
     });
-    titlebar.addEventListener('mousedown', (e) => {
+    titlebar.addEventListener('pointerdown', (e) => {
         if (e.target.classList.contains("closeButton")) {return;}
         dragging = true;
         startX = e.clientX;
         startY = e.clientY;
         titlebar.style.cursor = 'grabbing';
+        titlebar.setPointerCapture(e.pointerId);
+        el.querySelector(".box").style.pointerEvents = "none";
         e.stopPropagation();
     });
 
-    resize.addEventListener('mousedown', (e) => {
+    resize.addEventListener('pointerdown', (e) => {
         resizing = true;
         startX = e.clientX;
         startY = e.clientY;
+        resize.setPointerCapture(e.pointerId);
+        el.querySelector(".box").style.pointerEvents = "none";
         e.stopPropagation();
     });
     el.renderFunction = renderWindow;
     el.getData = function() {
         return [el.querySelector(".titlebar .windowName").innerHTML, posX,posY,width/32,height/32];
     };
-    window.addEventListener('mousemove', (e) => {
+    titlebar.addEventListener('pointermove', (e) => {
         const dx = (e.clientX - startX) / zoom;
         const dy = (e.clientY - startY) / zoom;
 
@@ -149,6 +153,11 @@ function createWindow(title, x, y, w, h, id=null) {
             startY = e.clientY;
             renderWindow();
         }
+    });
+
+    resize.addEventListener('pointermove', (e) => {
+        const dx = (e.clientX - startX) / zoom;
+        const dy = (e.clientY - startY) / zoom;
 
         if (resizing) {
             width += dx;
@@ -159,13 +168,16 @@ function createWindow(title, x, y, w, h, id=null) {
         }
     });
 
-    window.addEventListener('mouseup', () => {
+    window.addEventListener('pointerup', (e) => {
         if (dragging || resizing) save(el.querySelector(".box"));
         dragging = false;
         resizing = false;
         width = Math.max(SNAP*minWidths[el.querySelector(".identifier")?.id]||192,snap(width));
         height = Math.max(SNAP*minHeights[el.querySelector(".identifier")?.id]||96,snap(height));
         titlebar.style.cursor = 'grab';
+        titlebar.releasePointerCapture(e.pointerId);
+        resize.releasePointerCapture(e.pointerId);
+        el.querySelector(".box").style.pointerEvents = "";
     });
     windowList.push(el);
     return el.querySelector(".box");
@@ -179,15 +191,16 @@ function closeWindow(box) {
     box.closest(".window").remove();
 }
 
-viewport.addEventListener('mousedown', (e) => {
+viewport.addEventListener('pointerdown', (e) => {
     if (e.target !== viewport) return;
     panning = true;
     lastX = e.clientX;
     lastY = e.clientY;
     viewport.style.cursor = 'grabbing';
+    viewport.setPointerCapture(e.pointerId);
 });
 
-window.addEventListener('mousemove', (e) => {
+window.addEventListener('pointermove', (e) => {
     if (!panning) return;
 
     const dx = e.clientX - lastX;
@@ -202,9 +215,10 @@ window.addEventListener('mousemove', (e) => {
     renderCamera();
 });
 
-window.addEventListener('mouseup', () => {
+window.addEventListener('pointerup', (e) => {
     panning = false;
     viewport.style.cursor = 'grab';
+    viewport.releasePointerCapture(e.pointerId);
 });
 
 viewport.addEventListener('wheel', (e) => {
