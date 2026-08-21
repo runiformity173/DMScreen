@@ -80,7 +80,7 @@ function parseStrings(str,rollLiterals=true) {
       } else if (match.includes("@creature")) {
         final = `<a class='rollLink' href='https://runiformity173.github.io/dnd/MonsterSearch/display/#${final.replaceAll(' ','-')}' target='_blank'>${final}</a>`
       } else if (match.includes("@spell")) {
-        final = `<a class='rollLink' href='https://runiformity173.github.io/dnd/SpellSearch2024/display/?spell=${final.replaceAll(' ','-')}' target='_blank'>${final}</a>`
+        final = `<a class='rollLink' href='https://runiformity173.github.io/SpellList/view/#${final.replaceAll(' ','-')}' target='_blank'>${final}</a>`
       } else if (match.includes("@i ")) {
         final = `<i>${final}</i>`;
       } else {

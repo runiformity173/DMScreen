@@ -157,7 +157,7 @@ function addModule(addedModule,box,addDefault=true,extraData={}) {
         addModule("spellSelect",box,true);
         return;
       }
-      box.children[1].src = "https://runiformity173.github.io/dnd/SpellSearch2024/display/?spell="+extraData.name.toLowerCase().replaceAll(" ","-")+"&savebutton=false";
+      box.children[1].src = "https://runiformity173.github.io/SpellList/view/#"+extraData.name.toLowerCase().replaceAll(" ","-");
     }
   } else if (module == "monster") {
     if (addDefault) {
