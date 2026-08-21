@@ -125,7 +125,6 @@ function createWindow(title, x, y, w, h, id=null) {
         startY = e.clientY;
         titlebar.style.cursor = 'grabbing';
         titlebar.setPointerCapture(e.pointerId);
-        el.querySelector(".box").style.pointerEvents = "none";
         e.stopPropagation();
     });
 
@@ -134,7 +133,6 @@ function createWindow(title, x, y, w, h, id=null) {
         startX = e.clientX;
         startY = e.clientY;
         resize.setPointerCapture(e.pointerId);
-        el.querySelector(".box").style.pointerEvents = "none";
         e.stopPropagation();
     });
     el.renderFunction = renderWindow;
@@ -177,7 +175,6 @@ function createWindow(title, x, y, w, h, id=null) {
         titlebar.style.cursor = 'grab';
         titlebar.releasePointerCapture(e.pointerId);
         resize.releasePointerCapture(e.pointerId);
-        el.querySelector(".box").style.pointerEvents = "";
     });
     windowList.push(el);
     return el.querySelector(".box");
