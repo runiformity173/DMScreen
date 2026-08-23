@@ -51,7 +51,7 @@ body {
   background-color: #131313;
   box-sizing: border-box;
   overflow:hidden;
-  height: 100%;
+  height: calc(100% - 32px);
   /* -ms-overflow-style: none;
   scrollbar-width: none;  */
 }
