@@ -439,8 +439,81 @@ splint armor
 plate armor
 shield
 
+$magic item plane
+abyss
+acheron
+arborea
+arcadia
+beastlands
+bytopia
+carceri
+elysium
+gehenna
+hades
+limbo
+mechanus
+mount celestia
+nine hells
+pandemonium
+ysgard
+astral {2}
+ethereal {3}
+
+$magic item elemental
+acid
+cold
+fire
+force
+lightning
+necrotic
+poison
+psychic
+radiant
+thunder
+
+$magic item misc aspect
+nature, plant
+chaos
+life
+death
+
+$magic item origin
+aberration
+celestial
+drow
+dragon
+dwarf
+elemental air
+elemental earth
+elemental fire
+elemental water
+elf
+fey
+fiend
+giant
+construct
+ooze
+nature, beast
+undead
+
+$school of magic
+abjuration
+conjuration
+divination
+enchantment
+evocation
+illusion
+necromancy
+transmutation
+
+$magic item aspect
+[magic item plane] {0.5}
+[magic item elemental]
+[magic item misc aspect]
+[magic item origin]
+
 $magic item
-Weapon: <b>[weapon,title]</b><br>Armor: <b>[armor,title]</b><br>
+Weapon: <b>[weapon,title]</b><br>Armor: <b>[armor,title]</b><br>Aspect: <b>[magic item aspect,title]</b><br>School: <b>[school of magic,title]</b><br>
 `.replaceAll(/((?<=[,{])\n\s{4})|(\n(?=}))/g,"");
 
 function tableToOr(table) {
