@@ -449,11 +449,12 @@ $magic item category
 ring 
 staff
 [wand|rod]
-[boots|boots|gloves|gauntlets|belt] {3}
+[boots|boots|gloves|gauntlets|belt] {2}
 headwear
 [goggles|glasses] {0.5}
 [robe|cloak]
 [bracelet|necklace|necklace|pendant|amulet]
+[consumable types] {3}
 
 $consumable types
 dust
@@ -523,7 +524,7 @@ healing
 death
 time
 arcana
-[light|darkness|darkness]
+[light|darkness]
 [alertness|wisdom|intelligence|sleep]
 charming
 
