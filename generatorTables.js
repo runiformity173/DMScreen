@@ -512,7 +512,7 @@ $magic item aspect
 [magic item misc aspect]
 [magic item origin]
 
-$magic item
+$magic item inspiration
 Weapon: <b>[weapon,title]</b><br>Armor: <b>[armor,title]</b><br>Aspect: <b>[magic item aspect,title]</b><br>School: <b>[school of magic,title]</b><br>
 `.replaceAll(/((?<=[,{])\n\s{4})|(\n(?=}))/g,"");
 
