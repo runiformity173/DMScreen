@@ -385,6 +385,62 @@ $npc secret
 
 $npc
 [npc race,#race,hidden][npc gender,#gender,hidden][npc occupation,#occupation,hidden][Npc [#gender] [#race] name,title] is [an] [#gender] [#race,?extra][#race] ([npc alignment,#alignment]). [#gender,?subject,cap] is [npc high [#occupation,?high,!as]] but [npc low [#occupation,?low,!as]], and [npc appearance]. [#gender,?subject,cap] [works as|is|is] [an] [#occupation] who [lives for|lives for] [npc [#alignment] ideal], but [#gender,?subject] [npc secret]<br><br>Use the [#occupation,?stat block,title] stat block.
+
+$weapon
+club
+dagger
+greatclub
+handaxe
+javelin
+light hammer
+mace
+quarterstaff
+sickle
+spear
+dart
+light crossbow
+shortbow
+sling
+battleaxe
+flail
+glaive
+greataxe
+greatsword
+halberd
+lance
+longsword
+maul
+morningstar
+pike
+rapier
+scimitar
+shortsword
+trident
+warhammer
+war pick
+whip
+hand crossbow
+heavy crossbow
+longbow
+blowgun
+
+$armor
+padded armor
+leather armor
+studded leather armor
+hide armor
+chain shirt
+scale mail
+breastplate
+half plate armor
+ring mail
+chain mail
+splint armor
+plate armor
+shield
+
+$magic item
+Weapon: <b>[weapon,title]</b><br>Armor: <b>[armor,title]</b><br>
 `.replaceAll(/((?<=[,{])\n\s{4})|(\n(?=}))/g,"");
 
 function tableToOr(table) {
