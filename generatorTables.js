@@ -499,6 +499,8 @@ pandemonium
 ysgard
 astral {2}
 ethereal {3}
+feywild
+shadowfell
 
 $magic item elemental
 acid
@@ -520,12 +522,16 @@ life
 healing
 death
 time
+arcana
+[light|darkness|darkness]
+[alertness|wisdom|intelligence|sleep]
+charming
 
 $magic item origin
 aberration
 celestial
 drow
-dragon ([red|blue|green|black|white|copper|bronze|brass|gold|silver])
+([red|blue|green|black|white|copper|bronze|brass|gold|silver]) dragon
 dwarf
 elemental air
 elemental earth
@@ -534,7 +540,7 @@ elemental water
 elf
 fey
 fiend ([devil|demon])
-giant ([stone|hill|cloud|storm|fire|frost])
+([stone|hill|cloud|storm|fire|frost]) giant
 construct
 ooze
 beastial
