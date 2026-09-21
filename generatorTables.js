@@ -423,6 +423,12 @@ hand crossbow
 heavy crossbow
 longbow
 blowgun
+quiver {3}
+arrow
+crossbow bolt
+blowgun needle
+sling bullet
+scabbard {3}
 
 $armor
 padded armor
@@ -437,7 +443,42 @@ ring mail
 chain mail
 splint armor
 plate armor
-shield
+shield {3}
+
+$magic item category
+ring 
+staff
+[wand|rod]
+[boots|boots|gloves|gauntlets|belt] {3}
+headwear
+[goggles|glasses] {0.5}
+[robe|cloak]
+[bracelet|necklace|necklace|pendant|amulet]
+
+$consumable types
+dust
+potion {3}
+[ointment|oil]
+scroll
+
+
+$wondrous item type
+[pocketwatch|timekeeping device (not a watch)] {0.5}
+[shackles|manacles|rope|rope|chain|net|net]
+[bracers|bracers|armbands|bangles]
+[gem|crystal|stone] {3}
+[bag|pouch]
+[flask|canteen|goblet]
+hourglass
+book
+instrument
+figurine
+orb
+[small bell|doll|mirror]
+[key|whistle|mask|coin|lockpick|key]
+[pen|quill|paintbrush]
+[horn|horseshoes]
+
 
 $magic item plane
 abyss
@@ -472,16 +513,19 @@ radiant
 thunder
 
 $magic item misc aspect
-nature, plant
+plants {2}
+animal {2}
 chaos
 life
+healing
 death
+time
 
 $magic item origin
 aberration
 celestial
 drow
-dragon
+dragon ([red|blue|green|black|white|copper|bronze|brass|gold|silver])
 dwarf
 elemental air
 elemental earth
@@ -489,11 +533,11 @@ elemental fire
 elemental water
 elf
 fey
-fiend
-giant
+fiend ([devil|demon])
+giant ([stone|hill|cloud|storm|fire|frost])
 construct
 ooze
-nature, beast
+beastial
 undead
 
 $school of magic
@@ -507,13 +551,13 @@ necromancy
 transmutation
 
 $magic item aspect
-[magic item plane] {0.5}
-[magic item elemental]
-[magic item misc aspect]
-[magic item origin]
+[magic item plane]
+[magic item elemental] {2}
+[magic item misc aspect] {3}
+[magic item origin] {2}
 
 $magic item inspiration
-Weapon: <b>[weapon,title]</b><br>Armor: <b>[armor,title]</b><br>Aspect: <b>[magic item aspect,title]</b><br>School: <b>[school of magic,title]</b><br>
+Aspect: <b>[magic item aspect,title]</b><br>School: <b>[school of magic,title]</b><br><br>Weapon: <b>[weapon,title]</b><br>Armor: <b>[armor,title]</b><br>Other: <b>[magic item category,title]</b><br>Miscellaneous: <b>[wondrous item type,title]</b><br>
 `.replaceAll(/((?<=[,{])\n\s{4})|(\n(?=}))/g,"");
 
 function tableToOr(table) {
