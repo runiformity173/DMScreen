@@ -446,7 +446,7 @@ plate armor
 shield {3}
 
 $magic item category
-ring 
+ring
 staff
 [wand|rod]
 [boots|boots|gloves|gauntlets|belt] {2}
@@ -455,6 +455,8 @@ headwear
 [robe|cloak]
 [bracelet|necklace|necklace|pendant|amulet]
 [consumable types] {3}
+[bracers|bracers|armbands|bangles]
+mask {0.2}
 
 $consumable types
 dust
@@ -466,7 +468,6 @@ scroll
 $wondrous item type
 [pocketwatch|timekeeping device (not a watch)] {0.5}
 [shackles|manacles|rope|rope|chain|net|net]
-[bracers|bracers|armbands|bangles]
 [gem|crystal|stone] {3}
 [bag|pouch]
 [flask|canteen|goblet]
@@ -476,7 +477,7 @@ instrument
 figurine
 orb
 [small bell|doll|mirror]
-[key|whistle|mask|coin|lockpick|key]
+[key|whistle|coin|lockpick|key]
 [pen|quill|paintbrush]
 [horn|horseshoes]
 
