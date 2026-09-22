@@ -385,6 +385,187 @@ $npc secret
 
 $npc
 [npc race,#race,hidden][npc gender,#gender,hidden][npc occupation,#occupation,hidden][Npc [#gender] [#race] name,title] is [an] [#gender] [#race,?extra][#race] ([npc alignment,#alignment]). [#gender,?subject,cap] is [npc high [#occupation,?high,!as]] but [npc low [#occupation,?low,!as]], and [npc appearance]. [#gender,?subject,cap] [works as|is|is] [an] [#occupation] who [lives for|lives for] [npc [#alignment] ideal], but [#gender,?subject] [npc secret]<br><br>Use the [#occupation,?stat block,title] stat block.
+
+$weapon
+club
+dagger
+greatclub
+handaxe
+javelin
+light hammer
+mace
+quarterstaff
+sickle
+spear
+dart
+light crossbow
+shortbow
+sling
+battleaxe
+flail
+glaive
+greataxe
+greatsword
+halberd
+lance
+longsword
+maul
+morningstar
+pike
+rapier
+scimitar
+shortsword
+trident
+warhammer
+war pick
+whip
+hand crossbow
+heavy crossbow
+longbow
+blowgun
+quiver {3}
+arrow
+crossbow bolt
+blowgun needle
+sling bullet
+scabbard {3}
+
+$armor
+padded armor
+leather armor
+studded leather armor
+hide armor
+chain shirt
+scale mail
+breastplate
+half plate armor
+ring mail
+chain mail
+splint armor
+plate armor
+shield {3}
+
+$magic item category
+ring
+staff
+[wand|rod]
+[boots|boots|gloves|gauntlets|belt] {2}
+headwear
+[goggles|glasses] {0.5}
+[robe|cloak]
+[bracelet|necklace|necklace|pendant|amulet]
+[consumable types] {3}
+[bracers|bracers|armbands|bangles]
+mask {0.2}
+
+$consumable types
+dust
+potion {3}
+[ointment|oil]
+scroll
+
+
+$wondrous item type
+[pocketwatch|timekeeping device (not a watch)] {0.5}
+[shackles|manacles|rope|rope|chain|net|net]
+[gem|crystal|stone] {3}
+[bag|pouch]
+[flask|canteen|goblet]
+hourglass
+book
+instrument
+figurine
+orb
+[small bell|doll|mirror]
+[key|whistle|coin|lockpick|key]
+[pen|quill|paintbrush]
+[horn|horseshoes]
+
+
+$magic item plane
+abyss
+acheron
+arborea
+arcadia
+beastlands
+bytopia
+carceri
+elysium
+gehenna
+hades
+limbo
+mechanus
+mount celestia
+nine hells
+pandemonium
+ysgard
+astral {2}
+ethereal {3}
+feywild
+shadowfell
+
+$magic item elemental
+acid
+cold
+fire
+force
+lightning
+necrotic
+poison
+psychic
+radiant
+thunder
+
+$magic item misc aspect
+plants {2}
+animal {2}
+chaos
+life
+healing
+death
+time
+arcana
+[light|darkness]
+[alertness|wisdom|intelligence|sleep]
+charming
+
+$magic item origin
+aberration
+celestial
+drow
+([red|blue|green|black|white|copper|bronze|brass|gold|silver]) dragon
+dwarf
+elemental air
+elemental earth
+elemental fire
+elemental water
+elf
+fey
+fiend ([devil|demon])
+([stone|hill|cloud|storm|fire|frost]) giant
+construct
+ooze
+beastial
+undead
+
+$school of magic
+abjuration
+conjuration
+divination
+enchantment
+evocation
+illusion
+necromancy
+transmutation
+
+$magic item aspect
+[magic item plane]
+[magic item elemental] {2}
+[magic item misc aspect] {3}
+[magic item origin] {2}
+
+$magic item inspiration
+Aspect: <b>[magic item aspect,title]</b><br>School: <b>[school of magic,title]</b><br><br>Weapon: <b>[weapon,title]</b><br>Armor: <b>[armor,title]</b><br>Other: <b>[magic item category,title]</b><br>Miscellaneous: <b>[wondrous item type,title]</b><br>
 `.replaceAll(/((?<=[,{])\n\s{4})|(\n(?=}))/g,"");
 
 function tableToOr(table) {
