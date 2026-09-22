@@ -52,13 +52,13 @@ function capitalizeString(str,scheme) {
     if (scheme == "title") {
         let final = [];
         let i = 0;
-        const l = str.split(" ").length;
-        for (const word of str.split(" ")) {
+        const l = str.split(/(?<=[^a-zA-z'])|(?=[^a-zA-Z'])/g).length;
+        for (const word of str.split(/(?<=[^a-zA-z'])|(?=[^a-zA-Z'])/g)) {
             if (["a","an","the","of"].includes(word.toLowerCase()) && i != 0 && i < l-1) final.push(word.toLowerCase());
-            else final.push(word[0].toUpperCase()+word.slice(1).toLowerCase());
+            else final.push((word[0] || "").toUpperCase()+word.slice(1).toLowerCase());
             i++;
         }
-        return final.join(" ");
+        return final.join("");
     }
     return str;
 }
