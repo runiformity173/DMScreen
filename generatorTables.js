@@ -566,6 +566,166 @@ $magic item aspect
 
 $magic item inspiration
 Aspect: <b>[magic item aspect,title]</b><br>School: <b>[school of magic,title]</b><br><br>Weapon: <b>[weapon,title]</b><br>Armor: <b>[armor,title]</b><br>Other: <b>[magic item category,title]</b><br>Miscellaneous: <b>[wondrous item type,title]</b><br>
+
+$author name
+[npc common first name]
+[npc lyrical first name]
+
+$book name
+The Book of Common Law
+Carnivorous Gardening
+The Book of Twelve Seasons
+A [Journey|Voyage] Beyond the Veil
+Raising [Weasels|Ferrets] With Confidence
+What Lights Shine Forever? A History of Sun Deities
+A Short History of Dwarves
+Dragon Identification for the Colorblind
+[Author Name]'s Guide to Arm[ament|]s and Armor
+The Silent Bard and Other Myths
+The Letters of Saint [Author name]
+Secret Doors and Passages (Bad Poetry Collection)
+A [Journeyman|Beginner]'s [Guide|Introduction] to [Barrel Making|Shoe Making]
+[Simple|Basic] [Carpentry|Masonry] for [Complex|Advanced] Dungeons
+The Great [Extra|Inter]planar Hoax
+Fungal Crop Rotation for Underground Dwellers
+How to Use a Sundial [in the Rain|by Starlight|in the Underdark|in the Shadowfell|in a Storm]
+Farming [Wheat|Rice|Corn], [Barley|Rye|Oats], and Giant [Frogs|Lizards]
+A Caretaker's Guide to Giant [Centipedes|Spiders|Scorpions|Fire Beetles]
+101 Untraceable Poisons
+All Giants Great and [Small|Small|Less Great|Greater]
+[9|10|12|15|20|21|30|38|42|43|50|51|100|101] Things to Do With a Dead Lich
+Beauty Is in the Eye[s|] of the Beholder
+Planning Your Castle Construction
+Tavern Management in Rural Areas
+The Assassin's [Inspiration|Reference|Codex] (just a hollowed-out book with a dagger in it)
+Accidental Pickpocketing and Other Excuses
+Spells We Are Still Trying to Make Work
+[Author name]'s Guide to Wands
+Potatoes That Resemble Goblins: A Pictorial
+Basic Ammunition Accounting for Archers, Crossbowers, and Slingers
+Vines: Small, Medium, Giant
+Defeating a Heavy [Iron |]Gate
+Counting To Ten for Orcs
+The Arrow of Benevolent Intent
+Monstrous Philosophies
+Thirty Ways to Skin a Dragon
+Wizard Vs. Sorcerer: How to Spot the Difference
+[Tower|Stronghold] Defenses: What Works and What Does Not
+[Author name]'s Guide to [H|Unh]oly Symbols
+Prayers for the [Righteous|Pious]
+Identifying Grubs, Worms, and Sentient Fungi
+Wyverns, Wyrms, Drakes & Dragons: [The Differences|An Identification Guide]
+Recipes for Disaster: A Cookbook
+A Field Guide to Fey
+1001 Things to Do Underground
+A History of Thieves Guilds
+Weather Manipulation and Farm Management
+The Ultimate Underdark Atlas
+The Great [Roc|Chimera|Wyvern|Elephant] Hoax
+The Physics of Interdimensional Portals, Bags, and Holes
+What's Behind That Door? A Listener's Handbook
+Turnips. The Gods' Own Gift to the World
+How to Make a Lantern out of a Skull
+Candlemaking for Clerics
+Surveillance Techniques That Don't Work
+The Myth of the Useful Bard
+[Author name]'s Guide to Useless Glyphs
+Thieves Cant… Or Can They?
+Hunting Mushrooms in the Dark
+Cursed Idols and Relics of the Desert
+Climate Change and Arcane Magic
+How to Live Forever — Or Close to It
+Giant Flowers. Friend or Foe?
+The Most Grand Illusion
+Daily Affirmations for [Tyrants|Despots|Evil Masterminds]
+Hidden Staircases and Secret Doors
+Managing Your Giant Vines
+How to Get Away With Murder
+Sonnets for Sorcerers
+Seven Knights for Seven Dragons
+River Navigation Through Magical Forests
+A Biological Survey Of Gnomish “People”
+Mysterious Structures That Glow
+[Author name]'s Guide to [Red|Yellow|Green|Blue|Orange|Purple]-Colored Potions
+The Unlikely Romance of Owls and Bears
+Rocks That Sort of Look Like [Orcs|Ogres]
+Animal Husbandry and Midwifery
+Castle Gardening for Long Sieges
+Doors That Don't Go Anywhere and Other Dungeon Tricks
+How Green Is My Goblin?
+How to Tell a Brew Is True
+Explosive Grass and Other Lawn Defenses
+Is Your Spouse Polymorphed? [9|10|12|15|20|21|30|38|42|43|50|51|100|101] Signs They Might Be
+Plots, Intrigue, and Politics
+The Book of Uncommon Law
+Feeding Your Village on One Enlarged Vegetable a Year
+A Simple Guide to Vampires
+Vampiric Invitation Etiquette
+Unwrapping the Mystery of Mummies
+Ghost Stories Written by Ghosts
+[Author name]'s Guide to Love and Love Potions
+The Underground Horoscope
+Orienteering Without a [Compass|Sextant|Astrolabe]
+How to Work a [Compass|Sextant|Astrolabe]
+Fabled Treasures and Monsters
+Puppetry for Evil and/or Parties
+
+$book boring type
+Account records {2}
+Alchemist's notebook {2}
+Almanac {2}
+Bestiary {2}
+Biography {3}
+Book of heraldry {3}
+Book of myths
+Book of pressed flowers
+Calendar
+Catalog {5}
+Contract {2}
+Diary {3}
+Dictionary {2}
+[Doodles|Sketches] {3}
+Forged document
+Grammar workbook
+Heretical text {2}
+Historical text {5}
+Last will and testament {2}
+Legal code {2}
+Letter {8}
+Lunatic's ravings
+Magic tricks (not a spellbook)
+Magic scroll
+[Map|Atlas] {3}
+Memoir
+[Navigational chart|Star chart] {2}
+Novel {2}
+Painting
+Poetry {2}
+Prayer book {2}
+Property deed
+Recipe book or cookbook {4}
+Record of a criminal trial
+Royal proclamation
+Sheet music {2}
+Spellbook
+Text on armor making
+Text on astrology {2}
+Text on brewing {2}
+Text on exotic [flora|fauna] {2}
+Text on herbalism {2}
+Text on local flora {2}
+Text on mathematics {2}
+Text on masonry
+Text on medicine
+Theological text
+Tome of (forbidden lore)
+Travelogue for an exotic land {3}
+Travelogue of the planes
+
+$book
+<em>[book name]</em>
+[book boring type] {3}
+
 `.replaceAll(/((?<=[,{])\n\s{4})|(\n(?=}))/g,"");
 
 function tableToOr(table) {
