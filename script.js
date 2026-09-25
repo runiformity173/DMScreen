@@ -16,9 +16,7 @@ function eraseCookie(name) {
 if (!Array.isArray(getCookie("defaultPlayerList"))) {
   setCookie("defaultPlayerList",[]);
 }
-if (!Array.isArray(getCookie("windows"))) {
-  setCookie("windows",[]);
-}
+migrateWorkspaces();
 function datalistInput(element) {
     var val = element.value;
     var opts = element.list.children;
@@ -32,7 +30,7 @@ function datalistInput(element) {
     }
   }
 function load() {
-  getCookie("windows").forEach(function(j) {
+  getActiveWindows().forEach(function(j) {
     const i = createWindow(j.windowData[0],j.windowData[1],j.windowData[2],j.windowData[3],j.windowData[4],id=j.name);
     const entry = j;
     if (entry.type != "blank") {
@@ -206,16 +204,25 @@ function save(box=null) {
       data["name"] = document.querySelector(`#${box.id} .generatorName`).innerHTML;
       data["content"] = document.querySelector(`#${box.id} .generatorContent`).innerHTML;
     }
-    const newWindows = getCookie("windows");
+    const newWindows = getActiveWindows();
     const boxIndex = newWindows.findIndex(i=>i.name == box.id);
     if (boxIndex > -1)
       newWindows[boxIndex] = {name:box.id,type:type,data:data,windowData:box.closest(".window").getData()};
     else
       newWindows.push({name:box.id,type:type,data:data,windowData:box.closest(".window").getData()});
-    setCookie("windows",newWindows);
+    setActiveWindows(newWindows);
   } else {
     console.log(box);
     alert("didn't pass box to 'save()' correctly");
+  }
+}
+// Flushes every live window into the active workspace. Called before tearing the
+// canvas down so unsaved state (window positions, in-progress edits) survives a
+// workspace switch.
+function saveActiveWindows() {
+  for (const el of [...windowList]) {
+    const box = el.querySelector(".box");
+    if (box) save(box);
   }
 }
 function saveInitiative(box) {
