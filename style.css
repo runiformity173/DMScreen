@@ -239,6 +239,11 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  &.fab-menu-left {
+    right: auto;
+    left: 20px;
+    align-items: flex-start;
+  }
 }
 
 .bottom-button {
@@ -248,6 +253,13 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+}
+
+.tl-button {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .main-btn {
@@ -283,6 +295,9 @@ html, body {
 
   transition: 0.25s ease;
   background-color: #2a2a2a;
+  &.menu-items-right {
+    transform: translateY(10px);
+  }
 }
 
 .fab-menu:hover .menu-items, .fab-menu.forcedOpen .menu-items {
@@ -310,6 +325,75 @@ html, body {
 
 .menu-items button:hover {
   background: #444;
+}
+
+/* Workspaces */
+.fab-menu:hover .menu-items-left, .fab-menu.forcedOpen .menu-items-left {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 220px;
+  max-width: 320px;
+}
+.menu-items-left {
+  transform: translateY(10px);
+}
+.workspaceRow {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  width: 100%;
+}
+.menu-items button.workspaceOpen {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+}
+/* Both per-row action buttons are 31x31 circles matching .closeButton on the window
+   titlebars. The window button is tucked into a square corner so it only rounds the
+   top-right; standalone these become full circles. */
+.menu-items button.workspaceAction {
+  flex: 0 0 31px;
+  align-self: center;
+  width: 31px;
+  height: 31px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: #2a2a2a;
+  justify-content: center;
+}
+.menu-items button.workspaceAction svg {
+  display: block;
+}
+.menu-items button.workspaceAction.delete {
+  color: #ffaaaa;
+  font-size: 16px;
+  transition: color 0.1s ease-out;
+}
+.menu-items button.workspaceAction.delete:hover {
+  background-color: #2a2a2a;
+  color: #ff7777;
+}
+.workspaceRow.active button.workspaceOpen {
+  background-color: #444;
+  box-shadow: inset 0 0 0 1px #666;
+}
+.workspaceName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.windowCount {
+  flex: none;
+  font-size: 12px;
+  opacity: 0.6;
+}
+.menu-items button.newWorkspace {
+  margin-top: 6px;
+  border-top: 1px solid #444;
+  border-radius: 0 0 12px 12px;
 }
 /*
 I HATE CSS

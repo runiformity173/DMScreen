@@ -7,6 +7,9 @@ Use the "+" button to add a new module window to the screen.
 Drag the top bar of each window to move it, and drag the bottom right corner to resize it.  
 Your windows and their data are saved between reloads in local storage.  
 Click the bottom right button to return to the center of the canvas.  
+### Workspaces
+A workspace is its own set of windows and their data. Use the folder button in the top left to open the workspace list, then click a workspace to switch to it, or use the buttons on each row to create, rename, or delete one.  
+The active workspace is remembered between reloads. Your default player list is shared across all workspaces.  
 ## Modules
 The Notes module allows you to write text of your choosing.  
 The Initiative Tracker module does what it sounds like, with automatic sorting and support for setting a default player list.  
@@ -28,5 +31,4 @@ These features are at my attention and I might add any of them. The most likely 
 - Link to Notion? Idk how I would do that but it would be so sick.
 - Export Screen, save and load.
 - Popout windows. For example, clicking a spell on a monster stat block would create a new window instead of a new tab.
-- Workspace tabs?
 - Dungeon Map with Fog of War

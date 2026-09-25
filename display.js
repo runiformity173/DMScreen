@@ -180,12 +180,20 @@ function createWindow(title, x, y, w, h, id=null) {
     return el.querySelector(".box");
 }
 function closeWindow(box) {
-    windowList.splice(windowList.findIndex((i)=>(i.querySelector(".box").id === box.id)),1);
-    const newWindows = getCookie("windows");
-    const boxIndex = newWindows.findIndex(i=>i.name == box.id);
-    if (boxIndex > -1) newWindows.splice(boxIndex,1);
-    setCookie("windows",newWindows);
+// I am an honest man: the following code was AI generated.
+    const boxIndex = windowList.findIndex((i)=>(i.querySelector(".box").id === box.id));
+    if (boxIndex > -1) windowList.splice(boxIndex,1);
+    const newWindows = getActiveWindows();
+    const entryIndex = newWindows.findIndex(i=>i.name == box.id);
+    if (entryIndex > -1) newWindows.splice(entryIndex,1);
+    setActiveWindows(newWindows);
+// end of AI generated portion
     box.closest(".window").remove();
+}
+
+function clearWindows() {
+    for (const el of [...windowList]) el.remove();
+    windowList.length = 0;
 }
 
 viewport.addEventListener('pointerdown', (e) => {
@@ -261,10 +269,10 @@ function openModal(modalName, adding=false) {
     if (document.getElementById(modalName+"Modal").classList.contains("hidden")) {
         [...document.getElementsByClassName("addWindowInput")].forEach((o)=>o.classList.add("hidden"))
         document.getElementById(modalName+"Modal").classList.remove("hidden");
-        document.querySelector(".fab-menu").classList.add("forcedOpen");
+        document.getElementById("addMenu").classList.add("forcedOpen");
     } else {
         document.getElementById(modalName+"Modal").classList.add("hidden");
-        document.querySelector(".fab-menu").classList.remove("forcedOpen");
+        document.getElementById("addMenu").classList.remove("forcedOpen");
     }
 }
 let framesRemaining = 0;
