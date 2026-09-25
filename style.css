@@ -239,12 +239,26 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  &.fab-menu-left {
+    right: auto;
+    left: 20px;
+    align-items: flex-start;
+  }
 }
 
 .bottom-button {
   position: absolute;
   bottom: 20px;
   right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.tl-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -283,6 +297,9 @@ html, body {
 
   transition: 0.25s ease;
   background-color: #2a2a2a;
+  &.menu-items-right {
+    transform: translateY(10px);
+  }
 }
 
 .fab-menu:hover .menu-items, .fab-menu.forcedOpen .menu-items {
