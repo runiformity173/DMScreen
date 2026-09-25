@@ -351,14 +351,10 @@ html, body {
   gap: 8px;
   padding: 10px 12px;
 }
+/* Both per-row action buttons are 31x31 circles matching .closeButton on the window
+   titlebars. The window button is tucked into a square corner so it only rounds the
+   top-right; standalone these become full circles. */
 .menu-items button.workspaceAction {
-  flex: 0 0 30px;
-  padding: 10px 0;
-  justify-content: center;
-}
-/* Matches .closeButton on the window titlebars. The window button is tucked into a
-   square corner so it only rounds the top-right; standalone it becomes a full circle. */
-.menu-items button.workspaceAction.delete {
   flex: 0 0 31px;
   align-self: center;
   width: 31px;
@@ -366,6 +362,12 @@ html, body {
   padding: 0;
   border-radius: 50%;
   background-color: #2a2a2a;
+  justify-content: center;
+}
+.menu-items button.workspaceAction svg {
+  display: block;
+}
+.menu-items button.workspaceAction.delete {
   color: #ffaaaa;
   font-size: 16px;
   transition: color 0.1s ease-out;
