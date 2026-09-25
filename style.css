@@ -356,8 +356,23 @@ html, body {
   padding: 10px 0;
   justify-content: center;
 }
+/* Matches .closeButton on the window titlebars. The window button is tucked into a
+   square corner so it only rounds the top-right; standalone it becomes a full circle. */
+.menu-items button.workspaceAction.delete {
+  flex: 0 0 31px;
+  align-self: center;
+  width: 31px;
+  height: 31px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: #2a2a2a;
+  color: #ffaaaa;
+  font-size: 16px;
+  transition: color 0.1s ease-out;
+}
 .menu-items button.workspaceAction.delete:hover {
-  background-color: #7a2a2a;
+  background-color: #2a2a2a;
+  color: #ff7777;
 }
 .workspaceRow.active button.workspaceOpen {
   background-color: #444;

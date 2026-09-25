@@ -223,7 +223,6 @@ function renderWorkspaceSelector() {
         const remove = document.createElement("button");
         remove.className = "workspaceAction delete";
         remove.textContent = "×";
-        remove.title = "Delete workspace";
         remove.onclick = () => {
             if (confirm(`Delete the workspace "${workspace.name}"? This can't be undone.`)) {
                 deleteWorkspace(workspace.id);
