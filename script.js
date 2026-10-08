@@ -5,7 +5,7 @@ function setCookie(name,value) {
   localStorage.setItem("DMScreen2", JSON.stringify(prev));
 }
 function getCookie(name) {
-  if (location.href.includes("#portfolio") && !localStorage.getItem("DMScreen2")) localStorage.setItem("DMScreen2",JSON.stringify(portfolioData));
+  if (location.href.includes("#portfolio") && !localStorage.getItem("DMScreen2")) localStorage.setItem("DMScreen2",defaultSave);
   return JSON.parse(localStorage.getItem("DMScreen2") || "{}")[name] || {};
 }
 function eraseCookie(name) {   
