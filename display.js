@@ -227,6 +227,7 @@ window.addEventListener('pointerup', (e) => {
 });
 
 viewport.addEventListener('wheel', (e) => {
+    if (e.target.closest(".box")) return;
     e.preventDefault();
 
     const rect = viewport.getBoundingClientRect();
