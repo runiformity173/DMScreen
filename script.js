@@ -132,12 +132,12 @@ function addModule(addedModule,box,addDefault=true,extraData={}) {
     }
   } else if (module == "table") {
     if (addDefault) {
-      if (!(extraData.name.split(" (").slice(0,-1).join(" (") in data)) {
+      if (!(extraData.name in data)) {
         alert("Table does not exist");
         addModule("tableSelect",box,true);
         return;
       }
-      loadTable(box,extraData.name.split(" (").slice(0,-1).join(" ("));
+      loadTable(box,extraData.name);
     }
   } else if (module == "condition") {
     if (addDefault) {

@@ -4,7 +4,7 @@ function filterTables() {
 const data = {};
 for (const i of filterTables()) {
   document.getElementById("tablesDatalist").innerHTML += `<option>${i.name} (${i.source})</option>`;
-  data[i.name] = i;
+  data[i.name+" ("+i.source+")"] = i;
   if (i.colLabels) {
     const t = parseStrings(i.colLabels[0],false);
     if (t != i.colLabels[0]) {i.colLabels[0] = t;}
@@ -15,8 +15,9 @@ for (const i of filterTables()) {
 }
 const INDENT = "<div class='indentation'></div>";
 function loadTable(box,name) {
+  if (!(name in data)) {console.error("didn't find table named: " + name);return}
   const table = data[name];
-  document.querySelector(`#${box.id} .tableName`).innerHTML = table.name;
+  document.querySelector(`#${box.id} .tableName`).innerHTML = table.name + " (" + table.source + ")";
   // document.querySelector(`#${box.id} .tableCaption`).innerHTML = table.caption;
   let finalHeaders = "";
   let rollable = false;
