@@ -50,7 +50,7 @@ body {
 .box {
   background-color: #131313;
   box-sizing: border-box;
-  overflow:hidden;
+  overflow:auto;
   height: calc(100% - 32px);
   /* -ms-overflow-style: none;
   scrollbar-width: none;  */
@@ -79,7 +79,7 @@ body {
   padding-left:0;
 }
 .box .wrapper {
-  overflow:hidden;
+  overflow:scroll;
 }
 * > .bottomRow {
   position: relative;
@@ -351,9 +351,6 @@ html, body {
   gap: 8px;
   padding: 10px 12px;
 }
-/* Both per-row action buttons are 31x31 circles matching .closeButton on the window
-   titlebars. The window button is tucked into a square corner so it only rounds the
-   top-right; standalone these become full circles. */
 .menu-items button.workspaceAction {
   flex: 0 0 31px;
   align-self: center;
